@@ -1,13 +1,13 @@
 %define tarname Cython
 %define name 	python-cython
-%define version 0.9.6.12
+%define version 0.9.6.13.1
 %define release %mkrel 1
 
 Summary: Language for writing C extensions to Python
 Name: 	 %{name}
 Version: %{version}
 Release: %{release}
-Source0: %{tarname}-%{version}.tar.bz2
+Source0: %{tarname}-%{version}.tar.lzma
 License: Python
 Group: 	 Development/Python
 Url: 	 http://www.cython.org
