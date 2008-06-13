@@ -1,7 +1,7 @@
 %define tarname Cython
 %define name 	python-cython
-%define version 0.9.6.14
-%define release %mkrel 2
+%define version 0.9.8
+%define release %mkrel 1
 
 Summary: Language for writing C extensions to Python
 Name: 	 %{name}
@@ -14,7 +14,6 @@ Url: 	 http://www.cython.org
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires: python-devel
 BuildRequires: python-numeric-devel
-BuildArch: noarch
 
 %description
 Cython is a language that facilitates the writing of C extensions for
