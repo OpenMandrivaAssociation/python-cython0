@@ -1,7 +1,7 @@
 %define tarname Cython
 %define name 	python-cython
 %define version 0.9.8
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary: Language for writing C extensions to Python
 Name: 	 %{name}
@@ -14,6 +14,7 @@ Url: 	 http://www.cython.org
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires: python-devel
 BuildRequires: python-numeric-devel
+BuildRequires: dos2unix, emacs
 
 %description
 Cython is a language that facilitates the writing of C extensions for
@@ -25,7 +26,15 @@ edge functionality and optimizations.
 
 %install
 %__rm -rf %{buildroot}
-%__python setup.py install --root=%{buildroot} --record=INSTALLED_FILES.txt
+find -name .*DS_Store* | xargs rm -rf
+
+%__python setup.py install --root=%{buildroot} --record=FILELIST
+pushd Tools
+dos2unix cython-mode.el
+emacs -batch -f batch-byte-compile cython-mode.el
+%__install -m 755 -d %{buildroot}%{_sysconfdir}/emacs/site-start.d
+%__install -m 644 *.el* %{buildroot}%{_sysconfdir}/emacs/site-start.d
+popd
 
 # Uncomment when all checks work properly:
 #%check
@@ -35,7 +44,7 @@ edge functionality and optimizations.
 %clean
 %__rm -rf %{buildroot}
 
-%files -f INSTALLED_FILES.txt
+%files -f FILELIST
 %defattr(-,root,root)
 %doc *.txt Demos Doc
-
+%{_sysconfdir}/emacs/site-start.d/*.el*
