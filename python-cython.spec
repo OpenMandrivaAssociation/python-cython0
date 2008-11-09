@@ -1,20 +1,19 @@
 %define tarname Cython
 %define name 	python-cython
-%define version 0.9.8.1.1
-%define release %mkrel 2
+%define version 0.10
+%define release %mkrel 1
 
-Summary: Language for writing C extensions to Python
-Name: 	 %{name}
-Version: %{version}
-Release: %{release}
-Source0: %{tarname}-%{version}.tar.lzma
-License: Apache License
-Group: 	 Development/Python
-Url: 	 http://www.cython.org
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}
-BuildRequires: python-devel
-BuildRequires: python-numeric-devel
-BuildRequires: dos2unix, emacs
+Summary:	Language for writing C extensions to Python
+Name:		%{name}
+Version:	%{version}
+Release:	%{release}
+Source0:	%{tarname}-%{version}.tar.lzma
+License:	Apache License
+Group:		Development/Python
+Url:		http://www.cython.org
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
+BuildRequires:	dos2unix, emacs
+%py_requires -d
 
 %description
 Cython is a language that facilitates the writing of C extensions for
