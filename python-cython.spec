@@ -1,7 +1,7 @@
 %define tarname Cython
 %define name 	python-cython
 %define version 0.10.3
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary:	Language for writing C extensions to Python
 Name:		%{name}
