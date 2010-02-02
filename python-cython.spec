@@ -1,6 +1,6 @@
 %define tarname Cython
 %define name 	python-cython
-%define version 0.12
+%define version 0.12.1
 %define release %mkrel 1
 
 Summary:	Language for writing C extensions to Python
@@ -35,9 +35,8 @@ emacs -batch -f batch-byte-compile cython-mode.el
 %__install -m 644 *.el* %{buildroot}%{_sysconfdir}/emacs/site-start.d
 popd
 
-# Uncomment when all checks work properly:
 %check
-#PYTHONPATH=`pwd`/../build/lib make test clean
+PYTHONPATH=`pwd`/../build/lib make test clean
 
 %clean
 %__rm -rf %{buildroot}
