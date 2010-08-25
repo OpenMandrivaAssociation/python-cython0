@@ -1,6 +1,6 @@
 %define tarname Cython
 %define name 	python-cython
-%define version 0.12.1
+%define version 0.13
 %define release %mkrel 1
 
 Summary:	Language for writing C extensions to Python
@@ -27,7 +27,7 @@ edge functionality and optimizations.
 %__rm -rf %{buildroot}
 find -name .*DS_Store* | xargs rm -rf
 
-%__python setup.py install --root=%{buildroot} --record=FILELIST
+PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} --record=FILELIST
 pushd Tools
 dos2unix cython-mode.el
 emacs -batch -f batch-byte-compile cython-mode.el
