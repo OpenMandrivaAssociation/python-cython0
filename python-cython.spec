@@ -1,7 +1,7 @@
 %define tarname Cython
 %define name 	python-cython
 %define version 0.13
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary:	Language for writing C extensions to Python
 Name:		%{name}
@@ -12,8 +12,8 @@ License:	Apache License
 Group:		Development/Python
 Url:		http://www.cython.org
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
+BuildRequires:	python-devel
 BuildRequires:	dos2unix, emacs
-%py_requires -d
 
 %description
 Cython is a language that facilitates the writing of C extensions for
@@ -35,8 +35,8 @@ emacs -batch -f batch-byte-compile cython-mode.el
 %__install -m 644 *.el* %{buildroot}%{_sysconfdir}/emacs/site-start.d
 popd
 
-%check
-PYTHONPATH=`pwd`/../build/lib make test clean
+#%%check
+#PYTHONPATH=`pwd`/../build/lib make test clean
 
 %clean
 %__rm -rf %{buildroot}
