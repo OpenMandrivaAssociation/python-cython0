@@ -13,7 +13,7 @@ Group:		Development/Python
 Url:		http://www.cython.org
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:	python-devel
-BuildRequires:	dos2unix, emacs
+BuildRequires:	dos2unix
 
 %description
 Cython is a language that facilitates the writing of C extensions for
@@ -30,7 +30,6 @@ find -name .*DS_Store* | xargs rm -rf
 PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} --record=FILELIST
 pushd Tools
 dos2unix cython-mode.el
-emacs -batch -f batch-byte-compile cython-mode.el
 %__install -m 755 -d %{buildroot}%{_sysconfdir}/emacs/site-start.d
 %__install -m 644 *.el* %{buildroot}%{_sysconfdir}/emacs/site-start.d
 popd
