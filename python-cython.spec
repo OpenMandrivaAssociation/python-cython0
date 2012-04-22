@@ -1,6 +1,6 @@
 %define tarname Cython
 %define name 	python-cython
-%define version 0.15.1
+%define version 0.16
 %define release %mkrel 1
 
 Summary:	Language for writing C extensions to Python
@@ -27,7 +27,7 @@ edge functionality and optimizations.
 %__rm -rf %{buildroot}
 find -name .*DS_Store* | xargs rm -rf
 
-PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} --record=FILELIST
+PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot}
 pushd Tools
 dos2unix cython-mode.el
 %__install -m 755 -d %{buildroot}%{_sysconfdir}/emacs/site-start.d
@@ -40,7 +40,11 @@ popd
 %clean
 %__rm -rf %{buildroot}
 
-%files -f FILELIST
+%files 
 %defattr(-,root,root)
 %doc *.txt Demos Doc
 %{_sysconfdir}/emacs/site-start.d/*.el*
+%_bindir/cy*
+%py_platsitedir/Cython*
+%py_platsitedir/cython*
+%py_platsitedir/pyximport*
