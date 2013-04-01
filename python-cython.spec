@@ -2,7 +2,7 @@
 
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
-Version:	0.17
+Version:	0.18
 Release:	1
 Source0:	http://www.cython.org/release/%{tarname}-%{version}.tar.gz
 License:	Apache License
@@ -16,29 +16,67 @@ Cython is a language that facilitates the writing of C extensions for
 the Python language. It is based on Pyrex, but provides more cutting
 edge functionality and optimizations.
 
+
+%package -n python3-cython
+Summary:    Language for writing C extensions to Python
+Group:      Development/Python
+
+BuildRequires:  python3-devel
+
+%description -n python3-cython
+Cython is a language that facilitates the writing of C extensions for
+the Python language. It is based on Pyrex, but provides more cutting
+edge functionality and optimizations.
+
 %prep
 %setup -q -n %{tarname}-%{version}
 
+
+%build 
+pushd python2
+%{__python} setup.py build
+popd
+pushd python3
+%{__python3} setup.py build
+popd
+
 %install
+
+pushd python3
+PYTHONDONTWRITEBYTECODE= %__python3 setup.py install --root %{buildroot}
+mv %{buildroot}/usr/bin/cython %{buildroot}/usr/bin/cython3
+mv %{buildroot}/usr/bin/cygdb %{buildroot}/usr/bin/cygdb3
+popd
+
+pushd python2
 find -name .*DS_Store* | xargs rm -rf
 
-PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot}
+PYTHONDONTWRITEBYTECODE= %__python setup.py install --root %{buildroot}
 pushd Tools
 dos2unix cython-mode.el
 %__install -m 755 -d %{buildroot}%{_sysconfdir}/emacs/site-start.d
 %__install -m 644 *.el* %{buildroot}%{_sysconfdir}/emacs/site-start.d
+popd
 popd
 
 #%%check
 #PYTHONPATH=`pwd`/../build/lib make test clean
 
 %files 
-%doc *.txt Demos Doc
 %{_sysconfdir}/emacs/site-start.d/*.el*
-%_bindir/cy*
+%_bindir/cython
+%_bindir/cygdb
 %py_platsitedir/Cython*
 %py_platsitedir/cython*
 %py_platsitedir/pyximport*
+
+%files -n python3-cython
+%_bindir/cython3
+%_bindir/cygdb3
+%py3_platsitedir/__pycache__/*
+%py3_platsitedir/Cython*
+%py3_platsitedir/cython*
+%py3_platsitedir/pyximport*
 
 
 %changelog
