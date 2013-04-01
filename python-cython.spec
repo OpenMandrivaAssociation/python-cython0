@@ -37,6 +37,7 @@ pushd python2
 %{__python} setup.py build
 popd
 pushd python3
+export LDFLAGS="-lpython%{py3_ver}"
 %{__python3} setup.py build
 popd
 
