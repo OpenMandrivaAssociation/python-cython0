@@ -64,7 +64,7 @@ popd
 %endif
 
 %{__python} setup.py install -O1 --skip-build --root %buildroot
-rm -rf ${buildroot}%{python_sitelib}/setuptools/tests
+rm -rf %{buildroot}%{python_sitelib}/setuptools/tests
 
 %if %{with check}
 %check
