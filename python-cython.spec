@@ -1,8 +1,5 @@
 %bcond_without	python3
-# check is disabled right now because the tests themselves seem broken
-# (missing -lm, OpenMP, ...).
-# Please re-enable when updating to a version that fixes the tests.
-%bcond_with	check
+%bcond_without	check
 %define tarname Cython
 %define py3dir	python3
 
@@ -16,6 +13,11 @@ Group:		Development/Python
 Url:		http://www.cython.org
 BuildRequires:	python-devel
 BuildRequires:	dos2unix
+%if %{with_check}
+BuildRequires:	gdb
+BuildRequires:	gomp-devel
+BuildRequires:	python-numpy-devel
+%endif
 
 %description
 Cython is a language that facilitates the writing of C extensions for
@@ -59,22 +61,28 @@ popd
 # to be the default for now).
 %if %{with python3}
 pushd %{py3dir}/%{tarname}-%{version}
-%{__python3} setup.py install --skip-build --root %buildroot
-mv %buildroot/usr/bin/cython %buildroot/usr/bin/cython3
-mv %buildroot/usr/bin/cygdb %buildroot/usr/bin/cygdb3
+%{__python3} setup.py install --skip-build --root %{buildroot}
+mv %{buildroot}/usr/bin/cython %{buildroot}/usr/bin/cython3
+mv %{buildroot}/usr/bin/cygdb %{buildroot}/usr/bin/cygdb3
 rm -rf %{buildroot}%{python3_sitelib}/setuptools/tests
 popd
 %endif
 
-%{__python} setup.py install -O1 --skip-build --root %buildroot
+%{__python} setup.py install -O1 --skip-build --root %{buildroot}
 rm -rf %{buildroot}%{python_sitelib}/setuptools/tests
 
 %if %{with check}
 %check
+CFLAGS="%{optflags}" \
+CXXFLAGS="%{optflags}" \
+LDFLAGS="%{ldflags} -lm" \
 %{__python} runtests.py
 %if %{with python3}
 pushd %{py3dir}/%{tarname}-%{version}
-%{__python3} setup.py test
+CFLAGS="%{optflags}" \
+CXXFLAGS="%{optflags}" \
+LDFLAGS="%{ldflags} -lm" \
+%{__python3} runtests.py
 popd
 %endif # with_python3
 %endif
