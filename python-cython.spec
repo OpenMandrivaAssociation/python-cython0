@@ -13,7 +13,7 @@ Group:		Development/Python
 Url:		http://www.cython.org
 BuildRequires:	python-devel
 BuildRequires:	dos2unix
-%if %{with_check}
+%if %{with check}
 BuildRequires:	gdb
 BuildRequires:	gomp-devel
 BuildRequires:	python-numpy-devel
