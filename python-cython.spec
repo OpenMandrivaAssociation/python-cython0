@@ -70,6 +70,7 @@ popd
 
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 rm -rf %{buildroot}%{python_sitelib}/setuptools/tests
+rm -rf %{buildroot}/%python3_sitearch/__pycache__/
 
 %if %{with check}
 %check
