@@ -7,12 +7,12 @@ Summary:	Language for writing C extensions to Python
 Name:		python-cython
 Version:	0.19.1
 Release:	1
-Source0:	http://www.cython.org/release/%{tarname}-%{version}.tar.gz
 License:	Apache License
 Group:		Development/Python
 Url:		http://www.cython.org
-BuildRequires:	python-devel
+Source0:	http://www.cython.org/release/%{tarname}-%{version}.tar.gz
 BuildRequires:	dos2unix
+BuildRequires:	pkgconfig(python)
 %if %{with check}
 BuildRequires:	gdb
 BuildRequires:	gomp-devel
@@ -26,9 +26,9 @@ edge functionality and optimizations.
 
 %if %{with python3}
 %package -n python3-cython
-Summary:    Language for writing C extensions to Python
-Group:      Development/Python
-BuildRequires:  python3-devel
+Summary:	Language for writing C extensions to Python
+Group:		Development/Python
+BuildRequires:	pkgconfig(python3)
 
 %description -n python3-cython
 Cython is a language that facilitates the writing of C extensions for
@@ -37,7 +37,7 @@ edge functionality and optimizations.
 %endif
 
 %prep
-%setup -q -n %{tarname}-%{version}
+%setup -qn %{tarname}-%{version}
 %if %{with python3}
 rm -rf %{py3dir}
 mkdir %{py3dir}
@@ -70,7 +70,7 @@ popd
 
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 rm -rf %{buildroot}%{python_sitelib}/setuptools/tests
-rm -rf %{buildroot}/%python3_sitearch/__pycache__/
+rm -rf %{buildroot}/%{python3_sitearch}/__pycache__/
 
 %if %{with check}
 %check
@@ -89,15 +89,16 @@ popd
 %endif
 
 %files 
-%_bindir/cython
-%_bindir/cygdb
-%py_platsitedir/Cython*
-%py_platsitedir/cython*
-%py_platsitedir/pyximport*
+%{_bindir}/cython
+%{_bindir}/cygdb
+%{py_platsitedir}/Cython*
+%{py_platsitedir}/cython*
+%{py_platsitedir}/pyximport*
 
 %files -n python3-cython
-%_bindir/cython3
-%_bindir/cygdb3
-%py3_platsitedir/Cython*
-%py3_platsitedir/cython*
-%py3_platsitedir/pyximport*
+%{_bindir}/cython3
+%{_bindir}/cygdb3
+%{py3_platsitedir}/Cython*
+%{py3_platsitedir}/cython*
+%{py3_platsitedir}/pyximport*
+
