@@ -1,16 +1,17 @@
-%bcond_without	python3
-%bcond_without	check
+%bcond_with	python3
+%bcond_with	check
 %define tarname Cython
 %define py3dir	python3
 
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
-Version:	0.19.1
-Release:	5
-License:	Apache License
+Version:	0.20.1
+Release:	1
+License:	Python
 Group:		Development/Python
 Url:		http://www.cython.org
 Source0:	http://www.cython.org/release/%{tarname}-%{version}.tar.gz
+Source1:	%{name}.rpmlintrc
 BuildRequires:	dos2unix
 BuildRequires:	pkgconfig(python)
 %if %{with check}
@@ -74,16 +75,10 @@ rm -rf %{buildroot}/%{python3_sitearch}/__pycache__/
 
 %if %{with check}
 %check
-CFLAGS="%{optflags}" \
-CXXFLAGS="%{optflags}" \
-LDFLAGS="%{ldflags} -lm" \
 %{__python} runtests.py
 %if %{with python3}
 pushd %{py3dir}/%{tarname}-%{version}
-CFLAGS="%{optflags}" \
-CXXFLAGS="%{optflags}" \
-LDFLAGS="%{ldflags} -lm" \
-%{__python3} runtests.py
+%{__python3} setup.py test
 popd
 %endif # with_python3
 %endif
@@ -95,10 +90,11 @@ popd
 %{py_platsitedir}/cython*
 %{py_platsitedir}/pyximport*
 
+%if %{with python3}
 %files -n python3-cython
 %{_bindir}/cython3
 %{_bindir}/cygdb3
 %{py3_platsitedir}/Cython*
 %{py3_platsitedir}/cython*
 %{py3_platsitedir}/pyximport*
-
+%endif
