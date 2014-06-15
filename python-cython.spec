@@ -83,6 +83,12 @@ popd
 %endif # with_python3
 %endif
 
+%files 
+%{_bindir}/cython
+%{_bindir}/cygdb
+%{py_platsitedir}/Cython*
+%{py_platsitedir}/cython*
+%{py_platsitedir}/pyximport*
 
 %if %{with python3}
 %files -n python3-cython
@@ -91,11 +97,4 @@ popd
 %{py3_platsitedir}/Cython*
 %{py3_platsitedir}/cython*
 %{py3_platsitedir}/pyximport*
-%else
-%files 
-%{_bindir}/cython
-%{_bindir}/cygdb
-%{py_platsitedir}/Cython*
-%{py_platsitedir}/cython*
-%{py_platsitedir}/pyximport*
 %endif
