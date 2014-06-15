@@ -1,4 +1,4 @@
-%bcond_with	python3
+%bcond_without	python3
 %bcond_with	check
 %define tarname Cython
 %define py3dir	python3
