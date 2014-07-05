@@ -1,37 +1,38 @@
-%bcond_without	python3
+%bcond_without	python2
 %bcond_with	check
 %define tarname Cython
-%define py3dir	python3
+%define py2dir	python2
 
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
 Version:	0.20.2
-Release:	1
+Release:	2
 License:	Python
 Group:		Development/Python
 Url:		http://www.cython.org
 Source0:	http://www.cython.org/release/%{tarname}-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 BuildRequires:	dos2unix
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python3)
 %if %{with check}
 BuildRequires:	gdb
 BuildRequires:	gomp-devel
 BuildRequires:	python-numpy-devel
 %endif
+%rename python3-cython
 
 %description
 Cython is a language that facilitates the writing of C extensions for
 the Python language. It is based on Pyrex, but provides more cutting
 edge functionality and optimizations.
 
-%if %{with python3}
-%package -n python3-cython
+%if %{with python2}
+%package -n python2-cython
 Summary:	Language for writing C extensions to Python
 Group:		Development/Python
-BuildRequires:	pkgconfig(python3)
+BuildRequires:	pkgconfig(python2)
 
-%description -n python3-cython
+%description -n python2-cython
 Cython is a language that facilitates the writing of C extensions for
 the Python language. It is based on Pyrex, but provides more cutting
 edge functionality and optimizations.
@@ -39,62 +40,62 @@ edge functionality and optimizations.
 
 %prep
 %setup -qn %{tarname}-%{version}
-%if %{with python3}
-rm -rf %{py3dir}
-mkdir %{py3dir}
-tar -xvf %{SOURCE0} -C %{py3dir}
-find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
-%endif # with_python3
+%if %{with python2}
+rm -rf %{py2dir}
+mkdir %{py2dir}
+tar -xvf %{SOURCE0} -C %{py2dir}
+find %{py2dir} -name '*.py' | xargs sed -i '1s|^#!python|#!python2|'
+%endif # with_python2
 
 find -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python}|'
 
 %build 
-CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
-%if %{with python3}
-pushd %{py3dir}/%{tarname}-%{version}
-CFLAGS="$RPM_OPT_FLAGS" %{__python3} setup.py build
+CFLAGS="$RPM_OPT_FLAGS" python setup.py build
+%if %{with python2}
+pushd %{py2dir}/%{tarname}-%{version}
+CFLAGS="$RPM_OPT_FLAGS" python2 setup.py build
 popd
-%endif # with_python3
+%endif # with_python2
 
 %install
-# Must do the python3 install first because the scripts in /usr/bin are
-# overwritten with every setup.py install (and we want the python2 version
-# to be the default for now).
-%if %{with python3}
-pushd %{py3dir}/%{tarname}-%{version}
-%{__python3} setup.py install --skip-build --root %{buildroot}
-mv %{buildroot}/usr/bin/cython %{buildroot}/usr/bin/cython3
-mv %{buildroot}/usr/bin/cygdb %{buildroot}/usr/bin/cygdb3
-rm -rf %{buildroot}%{python3_sitelib}/setuptools/tests
+# Must do the python2 install first because the scripts in /usr/bin are
+# overwritten with every setup.py install (and we want the python3 version
+# to be the default).
+%if %{with python2}
+pushd %{py2dir}/%{tarname}-%{version}
+python2 setup.py install --skip-build --root %{buildroot}
+mv %{buildroot}/usr/bin/cython %{buildroot}/usr/bin/cython2
+mv %{buildroot}/usr/bin/cygdb %{buildroot}/usr/bin/cygdb2
+rm -rf %{buildroot}%{python2_sitelib}/setuptools/tests
 popd
 %endif
 
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+python setup.py install -O1 --skip-build --root %{buildroot}
 rm -rf %{buildroot}%{python_sitelib}/setuptools/tests
-rm -rf %{buildroot}/%{python3_sitearch}/__pycache__/
+rm -rf %{buildroot}/%{python_sitearch}/__pycache__/
 
 %if %{with check}
 %check
-%{__python} runtests.py
-%if %{with python3}
-pushd %{py3dir}/%{tarname}-%{version}
-%{__python3} setup.py test
+python runtests.py
+%if %{with python2}
+pushd %{py2dir}/%{tarname}-%{version}
+python2 setup.py test
 popd
-%endif # with_python3
+%endif # with_python2
 %endif
 
 %files 
-%{_bindir}/cython2
-%{_bindir}/cygdb2
+%{_bindir}/cython
+%{_bindir}/cygdb
 %{py_platsitedir}/Cython*
 %{py_platsitedir}/cython*
 %{py_platsitedir}/pyximport*
 
-%if %{with python3}
-%files -n python3-cython
-%{_bindir}/cython
-%{_bindir}/cygdb
-%{py3_platsitedir}/Cython*
-%{py3_platsitedir}/cython*
-%{py3_platsitedir}/pyximport*
+%if %{with python2}
+%files -n python2-cython
+%{_bindir}/cython2
+%{_bindir}/cygdb2
+%{py2_platsitedir}/Cython*
+%{py2_platsitedir}/cython*
+%{py2_platsitedir}/pyximport*
 %endif

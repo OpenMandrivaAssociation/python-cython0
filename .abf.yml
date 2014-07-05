@@ -1,4 +1,2 @@
-removed_sources:
-  Cython-0.20.1.tar.gz: e0f2c2094722bada54f24c33f5c792411778ba4f
 sources:
   Cython-0.20.2.tar.gz: e3fd4c32bdfa4a388cce9538417237172c656d55
