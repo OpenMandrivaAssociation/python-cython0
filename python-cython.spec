@@ -6,7 +6,7 @@
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
 Version:	0.21
-Release:	3
+Release:	4
 License:	Python
 Group:		Development/Python
 Url:		http://www.cython.org
@@ -14,6 +14,7 @@ Source0:	http://www.cython.org/release/%{tarname}-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 BuildRequires:	dos2unix
 BuildRequires:	pkgconfig(python3)
+BuildRequires:	python-setuptools
 %if %{with check}
 BuildRequires:	gdb
 BuildRequires:	gomp-devel
@@ -31,7 +32,7 @@ edge functionality and optimizations.
 Summary:	Language for writing C extensions to Python
 Group:		Development/Python
 BuildRequires:	pkgconfig(python2)
-
+BuildRequires:	python2-setuptools
 %description -n python2-cython
 Cython is a language that facilitates the writing of C extensions for
 the Python language. It is based on Pyrex, but provides more cutting
