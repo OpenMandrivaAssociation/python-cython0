@@ -5,12 +5,12 @@
 
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
-Version:	0.28.1
+Version:	0.28.3
 Release:	1
 License:	Python
 Group:		Development/Python
 Url:		http://www.cython.org
-Source0:	https://pypi.python.org/packages/be/08/bb5ffd1c32a951cbc26011ecb8557e59dc7a0a4975f0ad98b2cd7446f7dd/Cython-%{version}.tar.gz
+Source0:	https://files.pythonhosted.org/packages/b3/ae/971d3b936a7ad10e65cb7672356cff156000c5132cf406cb0f4d7a980fd3/Cython-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 BuildRequires:	dos2unix
 BuildRequires:	pkgconfig(python3)
