@@ -1,16 +1,16 @@
 %bcond_without	python2
 %bcond_with	check
-%define tarname Cython
+%define tarname cython
 %define py2dir	python2
 
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
-Version:	0.28.3
-Release:	2
+Version:	0.29.7
+Release:	1
 License:	Python
 Group:		Development/Python
 Url:		http://www.cython.org
-Source0:	https://files.pythonhosted.org/packages/b3/ae/971d3b936a7ad10e65cb7672356cff156000c5132cf406cb0f4d7a980fd3/Cython-%{version}.tar.gz
+Source0:	https://github.com/cython/cython/archive/%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 BuildRequires:	dos2unix
 BuildRequires:	pkgconfig(python3)
