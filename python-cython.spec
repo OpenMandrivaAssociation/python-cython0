@@ -3,9 +3,11 @@
 %define tarname cython
 %define py2dir	python2
 
+%global optflags %optflags -O3
+
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
-Version:	0.29.7
+Version:	0.29.9
 Release:	1
 License:	Python
 Group:		Development/Python
@@ -40,7 +42,8 @@ edge functionality and optimizations.
 %endif
 
 %prep
-%setup -qn %{tarname}-%{version}
+%autosetup -n %{tarname}-%{version}
+
 %if %{with python2}
 rm -rf %{py2dir}
 mkdir %{py2dir}
@@ -50,12 +53,13 @@ find %{py2dir} -name '*.py' | xargs sed -i '1s|^#!python|#!python2|'
 
 find -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python}|'
 
-%build 
-CFLAGS="$RPM_OPT_FLAGS" python setup.py build
+%build
+%setup_build_flags
+CFLAGS="%{optflags}" python setup.py build
 %if %{with python2}
-pushd %{py2dir}/%{tarname}-%{version}
-CFLAGS="$RPM_OPT_FLAGS" python2 setup.py build
-popd
+cd %{py2dir}/%{tarname}-%{version}
+CFLAGS="%{optflags}" python2 setup.py build
+cd -
 %endif # with_python2
 
 %install
@@ -63,12 +67,12 @@ popd
 # overwritten with every setup.py install (and we want the python3 version
 # to be the default).
 %if %{with python2}
-pushd %{py2dir}/%{tarname}-%{version}
+cd %{py2dir}/%{tarname}-%{version}
 python2 setup.py install --skip-build --root %{buildroot}
 mv %{buildroot}/usr/bin/cython %{buildroot}/usr/bin/cython2
 mv %{buildroot}/usr/bin/cygdb %{buildroot}/usr/bin/cygdb2
 rm -rf %{buildroot}%{python2_sitelib}/setuptools/tests
-popd
+cd -
 %endif
 
 python setup.py install -O1 --skip-build --root %{buildroot}
@@ -79,9 +83,9 @@ rm -rf %{buildroot}/%{python_sitearch}/__pycache__/
 %check
 python runtests.py
 %if %{with python2}
-pushd %{py2dir}/%{tarname}-%{version}
+cd %{py2dir}/%{tarname}-%{version}
 python2 setup.py test
-popd
+cd -
 %endif # with_python2
 %endif
 
