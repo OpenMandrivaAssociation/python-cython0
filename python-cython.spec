@@ -54,7 +54,7 @@ find %{py2dir} -name '*.py' | xargs sed -i '1s|^#!python|#!python2|'
 find -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python}|'
 
 %build
-%setup_build_flags
+%setup_compile_flags
 CFLAGS="%{optflags}" python setup.py build
 %if %{with python2}
 cd %{py2dir}/%{tarname}-%{version}
