@@ -7,7 +7,7 @@
 
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
-Version:	0.29.9
+Version:	0.29.10
 Release:	1
 License:	Python
 Group:		Development/Python
