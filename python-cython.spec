@@ -15,7 +15,7 @@ Release:	1
 License:	Python
 Group:		Development/Python
 Url:		http://www.cython.org
-Source0:	https://github.com/cython/cython/archive/%{version}.tar.gz
+Source0:	https://github.com/cython/cython/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
 BuildRequires:	dos2unix
 BuildRequires:	pkgconfig(python)
