@@ -1,7 +1,7 @@
 # Python module not linking to libpython
 %global _disable_ld_no_undefined 1
 
-%bcond_without	python2
+%bcond_with	python2
 %bcond_with	check
 %define tarname cython
 %define py2dir	python2
