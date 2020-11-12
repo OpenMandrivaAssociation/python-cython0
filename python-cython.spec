@@ -1,7 +1,7 @@
 # Python module not linking to libpython
 %global _disable_ld_no_undefined 1
 
-%bcond_with	python2
+%bcond_without	python2
 %bcond_with	check
 %define tarname cython
 %define py2dir	python2
@@ -11,7 +11,7 @@
 Summary:	Language for writing C extensions to Python
 Name:		python-cython
 Version:	0.29.21
-Release:	2
+Release:	3
 License:	Python
 Group:		Development/Python
 Url:		http://www.cython.org
