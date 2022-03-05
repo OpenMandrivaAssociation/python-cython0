@@ -100,7 +100,7 @@ cd -
 %{py_platsitedir}/Cython-%{version}-*.egg-info
 %{py_platsitedir}/cython*
 %{py_platsitedir}/pyximport
-%{py_platsitedir}/__pycache__/*.py?
+#{py_platsitedir}/__pycache__/*.py?
 
 %if %{with python2}
 %files -n python2-cython
