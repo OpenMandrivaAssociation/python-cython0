@@ -9,7 +9,7 @@
 %global optflags %optflags -O3
 
 Summary:	Language for writing C extensions to Python
-Name:		python-cython
+Name:		python-cython0
 Version:	0.29.36
 Release:	1
 License:	Python
